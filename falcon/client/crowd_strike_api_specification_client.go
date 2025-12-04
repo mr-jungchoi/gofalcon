@@ -11,6 +11,7 @@ import (
 	"github.com/go-openapi/strfmt"
 
 	"github.com/crowdstrike/gofalcon/falcon/client/a_s_p_m"
+	"github.com/crowdstrike/gofalcon/falcon/client/admission_control_policies"
 	"github.com/crowdstrike/gofalcon/falcon/client/alerts"
 	"github.com/crowdstrike/gofalcon/falcon/client/api_integrations"
 	"github.com/crowdstrike/gofalcon/falcon/client/cao_hunting"
@@ -288,6 +289,7 @@ func New(transport runtime.ClientTransport, formats strfmt.Registry) *CrowdStrik
 	cli.UserManagement = user_management.New(transport, formats)
 	cli.Workflows = workflows.New(transport, formats)
 	cli.ZeroTrustAssessment = zero_trust_assessment.New(transport, formats)
+	cli.AdmissionControlPolicies = admission_control_policies.New(transport, formats)
 	return cli
 }
 
@@ -567,6 +569,8 @@ type CrowdStrikeAPISpecification struct {
 	ZeroTrustAssessment zero_trust_assessment.ClientService
 
 	Transport runtime.ClientTransport
+
+	AdmissionControlPolicies admission_control_policies.ClientService
 }
 
 // SetTransport changes the transport on the client and all its subresources
@@ -689,4 +693,5 @@ func (c *CrowdStrikeAPISpecification) SetTransport(transport runtime.ClientTrans
 	c.UserManagement.SetTransport(transport)
 	c.Workflows.SetTransport(transport)
 	c.ZeroTrustAssessment.SetTransport(transport)
+	c.AdmissionControlPolicies.SetTransport(transport)
 }
